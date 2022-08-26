@@ -2,13 +2,13 @@
 %{
 1.程序编写日期：2022.08.24
 2.程序说明：
-3.程序输入：车辆当前时刻的六个状态，预测时域Np和采样周期T
+3.程序输入：车辆当前时刻的六个状态，预测时域Np和采样周期Ts
 4.程序输出：车辆在预测时域Np内每一时刻的状态
 %}
 
 % 函数的六个输出都是[Np,1]的矩阵
 
-function [x_pre, y_pre, v_pre, a_pre, theta_pre, omega_pre] = VehicleStatePre(x_now, y_now, v_now, a_now, theta_now, omega_now, Np,T)
+function [x_pre, y_pre, v_pre, a_pre, theta_pre, omega_pre] = VehicleStatePre(x_now, y_now, v_now, a_now, theta_now, omega_now, Np,Ts)
     % 创建空矩阵，保存输出
     x_pre = zeros(Np,1);
     y_pre = zeros(Np,1);
@@ -25,7 +25,7 @@ function [x_pre, y_pre, v_pre, a_pre, theta_pre, omega_pre] = VehicleStatePre(x_
     omega = omega_now;
     for i = 1 : Np
         % 通过模型预测下一时刻状态
-        [X_next] = GetNextStateByCTRA(x, y, v, a, theta, omega, T);
+        [X_next] = GetNextStateByCTRA(x, y, v, a, theta, omega, Ts);
         % 更新变量
         x = X_next(1);
         y = X_next(2);
